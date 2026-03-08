@@ -1,0 +1,134 @@
+chart ScannerTest {
+
+    ~~~
+    Multi-line comment block.
+    This program demonstrates every token type in the Astro language.
+    The scanner should recognize all of these without any errors.
+    ~~~
+
+    ~~ ── 1. Constants declared with refine ──────────────────────────────────
+    align refine Uranus PI        = 3.14159265359;
+    align refine Saturn MAX_SPEED = 299792458;
+    align refine Venus  LANGUAGE  = "Astro";
+
+    ~~ ── 2. All nine data types ─────────────────────────────────────────────
+    align Saturn   age       = 25;
+    align Moon     smallNum  = 100;
+    align Mercury  height    = 5.9;
+    align Uranus   precise   = 3.14159265359;
+    align Mars     isActive  = true;
+    align Venus    name      = "Orion";
+    align Neptune  initial   = 'A';
+    align Pluto    voidVar   = null;
+    align Jupiter  userData;
+
+    ~~ ── 3. Non-decimal number literals ─────────────────────────────────────
+    align Saturn binaryNum = 0b11111111;
+    align Saturn octalNum  = 0o377;
+    align Saturn hexNum    = 0xFF;
+
+    ~~ ── 4. Escape sequences in strings ─────────────────────────────────────
+    align Venus tabbed    = "Col1\tCol2";
+    align Venus multiline = "Line1\nLine2";
+    align Venus quoted    = "She said \"Hello\"";
+    align Venus backslash = "C:\\Users\\Astro";
+
+    ~~ ── 5. Identifiers with underscores and dollar signs ───────────────────
+    align Saturn system$Counter = 0;
+    align Venus  config_path$   = "/etc/astro";
+
+    ~~ ── 6. Manifests (implicit declaration) ────────────────────────────────
+    speed    manifests 299792458;
+    greeting manifests "Hello Universe";
+
+    ~~ ── 7. All arithmetic operators ────────────────────────────────────────
+    align Saturn sumResult  = 10 + 5;
+    align Saturn diffResult = 20 - 8;
+    align Saturn prodResult = 6 * 7;
+    align Saturn divResult  = 100 / 4;
+    align Saturn modResult  = 17 % 5;
+
+    ~~ ── 8. All relational and equality operators ────────────────────────────
+    align Mars eq   = (10 == 10);
+    align Mars neq  = (5 != 3);
+    align Mars lt   = (3 < 7);
+    align Mars gt   = (9 > 2);
+    align Mars lteq = (5 <= 5);
+    align Mars gteq = (8 >= 7);
+
+    ~~ ── 9. Logical operators ───────────────────────────────────────────────
+    align Mars andResult = (true && false);
+    align Mars orResult  = (true || false);
+    align Mars notResult = !false;
+
+    ~~ ── 10. Negative number literals ──────────────────────────────────────
+    align Saturn negInt    = -42;
+    align Mercury negFloat = -3.14;
+
+    ~~ ── 11. Transmute (explicit type conversion) ───────────────────────────
+    align Saturn converted = transmute("42", Saturn);
+
+    ~~ ── 12. Input and output ───────────────────────────────────────────────
+    radiate("Enter your favorite planet: ");
+    align Venus planet;
+    summon(planet);
+    radiate("You entered: ", planet, "\n");
+
+    ~~ ── 13. When / else ────────────────────────────────────────────────────
+    when (age >= 18) {
+        radiate("Adult\n");
+    }
+    else {
+        radiate("Minor\n");
+    }
+
+    ~~ ── 14. Trace / path / voidPath ────────────────────────────────────────
+    align Saturn choice = 2;
+    trace (choice) {
+        path 1:
+            radiate("One\n");
+            collapse;
+        path 2:
+            radiate("Two\n");
+            collapse;
+        voidPath:
+            radiate("Unknown\n");
+    }
+
+    ~~ ── 15. Orbit loop (while) ─────────────────────────────────────────────
+    align Saturn ctr = 0;
+    orbit (ctr < 5) {
+        radiate(ctr);
+        ctr = ctr + 1;
+    }
+
+    ~~ ── 16. Cycle loop (for) ───────────────────────────────────────────────
+    cycle (align Saturn i = 0; i < 3; i = i + 1) {
+        radiate(i);
+    }
+
+    ~~ ── 17. Cast / retrograde (do-while) ───────────────────────────────────
+    align Saturn n = 0;
+    cast {
+        radiate(n);
+        n = n + 1;
+    } retrograde (n < 3);
+
+    ~~ ── 18. Constellation (array) ──────────────────────────────────────────
+    align constellation Saturn nums = [10, 20, 30];
+    radiate(nums[0]);
+
+    ~~ ── 19. Skip and collapse ──────────────────────────────────────────────
+    cycle (align Saturn j = 0; j < 5; j = j + 1) {
+        when (j == 2) { skip; }
+        when (j == 4) { collapse; }
+        radiate(j);
+    }
+
+    ~~ ── 20. Chained assignment (right-to-left) ─────────────────────────────
+    align Saturn a;
+    align Saturn b;
+    align Saturn c;
+    a = b = c = 10;
+
+}

@@ -1,0 +1,46 @@
+chart ScannerErrorTest {
+
+    ~~ ── Error 1: Illegal character '@' ─────────────────────────────────────
+    ~~ The '@' symbol is not part of any valid Astro token.
+    align Saturn x = 5 @ 2;
+
+    ~~ ── Error 2: Identifier starting with a digit ──────────────────────────
+    ~~ '1value' is not a valid token. Identifiers must begin with a letter.
+    ~~ NOTE: The scanner sees '1' as a number, then 'value' as an identifier.
+    ~~       The PARSER will catch that a number cannot appear where a name is expected.
+    align Saturn 1value = 5;
+
+    ~~ ── Error 3: Invalid numeric suffix ────────────────────────────────────
+    ~~ 'f' after a float literal is not supported in Astro.
+    align Mercury speed = 4000.5f;
+
+    ~~ ── Error 4: Unterminated string literal ────────────────────────────────
+    ~~ The closing double-quote is missing. The newline ends the line before it is found.
+    align Venus badString = "AstroLang;
+
+    ~~ ── Error 5: Unterminated character literal ─────────────────────────────
+    ~~ The closing single-quote is missing before end of line.
+    align Neptune badChar = 'A;
+
+    ~~ ── Error 6: Multiple decimal points in a float ─────────────────────────
+    ~~ A float literal can only have one decimal point.
+    align Mercury badFloat = 3.14.159;
+
+    ~~ ── Error 7: Invalid logical operator '&&&' ────────────────────────────
+    ~~ Only '&&' is a valid logical AND. Three ampersands is not recognized.
+    align Mars badLogic = true &&& false;
+
+    ~~ ── Error 8: Single tilde — not a valid comment marker ─────────────────
+    ~~ A comment must begin with '~~' or '~~~'. A lone '~' is a lexical error.
+    ~ This line is not a valid comment
+
+    ~~ ── Error 9: Unterminated multi-line comment ────────────────────────────
+    ~~ The closing '~~~' is never found before EOF.
+    ~~~ This comment block never closes...
+    align Saturn y = 10;
+
+    ~~ ── Error 10: Invalid binary literal digit ─────────────────────────────
+    ~~ Binary literals may only contain 0 and 1. The digit '2' is not allowed.
+    align Saturn bits = 0b102;
+
+}
