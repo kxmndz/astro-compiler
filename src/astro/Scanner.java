@@ -804,8 +804,27 @@ public class Scanner {
                         + "Line " + line + ", Col " + col + ": " + message
                         + ANSI_RESET
                         + "\n");
-        errorMessages.add(errorString);
         System.out.println(ANSI_RED + "[SCANNER ERROR] " + ANSI_RESET + errorString);
+
+        // add a preview of the error in the source code to the error summary
+        String errorPreview = getErrorPreview(line, col);
+        errorMessages.add(errorString + "    " + errorPreview);
+    }
+
+    /**
+     * Returns a preview of the line where the error occurred, with a marker at the
+     * error column.
+     * Example: "some code here"
+     */
+    private String getErrorPreview(int errorLine, int errorCol) {
+        String[] lines = source.split("\n");
+        if (errorLine < 1 || errorLine > lines.length) {
+            return "(Could not get error preview)";
+        }
+        String lineText = lines[errorLine - 1];
+        
+        return lineText + '\n' + " ".repeat(errorCol+3) + "^\n";
+
     }
 
     /**
