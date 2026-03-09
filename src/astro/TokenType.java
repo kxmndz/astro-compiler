@@ -11,7 +11,7 @@ package astro;
 public enum TokenType {
 
     // ── Program Structure ──────────────────────────────────────────────────────
-    // "chart" — signals the start of a program
+    // "chart" - signals the start of a program
     T_PROGRAM_START,
 
     // ── Data Type Keywords ─────────────────────────────────────────────────────
@@ -19,30 +19,30 @@ public enum TokenType {
     T_DATATYPE,
 
     // ── Declaration Keywords ───────────────────────────────────────────────────
-    T_ALIGN,         // align       — explicit / static declaration
-    T_MANIFESTS,     // manifests   — implicit / dynamic declaration
-    T_ARRAY_MARKER,  // constellation — array declaration
-    T_REFINE,        // refine      — constant declaration
+    T_ALIGN,         // align       - explicit / static declaration
+    T_MANIFESTS,     // manifests   - implicit / dynamic declaration
+    T_ARRAY_MARKER,  // constellation - array declaration
+    T_REFINE,        // refine      - constant declaration
 
     // ── Control Flow Keywords ──────────────────────────────────────────────────
-    T_WHEN,          // when        — if
-    T_ELSE,          // else        — else
-    T_ORBIT,         // orbit       — while loop
-    T_CYCLE,         // cycle       — for loop
-    T_CAST,          // cast        — do  (start of do-while)
-    T_RETROGRADE,    // retrograde  — while (end of do-while)
-    T_TRACE,         // trace       — switch
-    T_PATH,          // path        — case
-    T_VOIDPATH,      // voidPath    — default
-    T_COLLAPSE,      // collapse    — break
-    T_SKIP,          // skip        — continue
+    T_WHEN,          // when        - if
+    T_ELSE,          // else        - else
+    T_ORBIT,         // orbit       - while loop
+    T_CYCLE,         // cycle       - for loop
+    T_CAST,          // cast        - do  (start of do-while)
+    T_RETROGRADE,    // retrograde  - while (end of do-while)
+    T_TRACE,         // trace       - switch
+    T_PATH,          // path        - case
+    T_VOIDPATH,      // voidPath    - default
+    T_COLLAPSE,      // collapse    - break
+    T_SKIP,          // skip        - continue
 
     // ── I/O Keywords ──────────────────────────────────────────────────────────
-    T_SUMMON,        // summon      — input statement
-    T_RADIATE,       // radiate     — output statement
+    T_SUMMON,        // summon      - input statement
+    T_RADIATE,       // radiate     - output statement
 
     // ── Type Conversion ────────────────────────────────────────────────────────
-    T_TRANSMUTE,     // transmute   — explicit type cast
+    T_TRANSMUTE,     // transmute   - explicit type cast
 
     // ── Literal Values ─────────────────────────────────────────────────────────
     T_NUMBER_LITERAL,    // 42, -3.14, 0xFF, 0b101, 0o77
@@ -89,6 +89,6 @@ public enum TokenType {
     T_COLON,                // :
 
     // ── Special ────────────────────────────────────────────────────────────────
-    T_EOF,   // end of file — signals the tester to stop requesting tokens
+    T_EOF,   // end of file - signals the tester to stop requesting tokens
     T_ERROR  // a character sequence that does not form any valid token
 }

@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 /**
- * Astro Scanner Tester — Phase 2
+ * Astro Scanner Tester - Phase 2
  *
  * Usage:
  * java astro.Main <path_to_source_file>
@@ -101,7 +101,7 @@ public class Main {
                 boolean isNew = !symbolTable.contains(token.lexeme);
                 symbolTable.put(token.lexeme, token.type);
 
-                // Print the token — mark new identifiers with (new) for clarity
+                // Print the token - mark new identifiers with (new) for clarity
                 System.out.printf("%s%-28s%s %s%-20s%s line %-5d col %-5d %s%n",
                         ANSI_BLUE,
                         token.type.name(),
@@ -145,7 +145,7 @@ public class Main {
     private static void printHeader(String filePath) {
         System.out.println();
         System.out.println("==========================================================");
-        System.out.println("  ASTRO LANGUAGE SCANNER — Phase 2");
+        System.out.println("  ASTRO LANGUAGE SCANNER - Phase 2");
         System.out.println("  Source file: " + filePath);
         System.out.println("==========================================================");
         System.out.printf("%-28s %-20s %s%n", "TOKEN TYPE", "LEXEME / VALUE", "POSITION");

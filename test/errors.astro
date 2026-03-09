@@ -1,0 +1,50 @@
+chart ScanError_IllegalChar {
+    align Saturn x = 5 @ 2;
+    ~~ ERROR (SCANNER): Illegal character '@' (not part of any valid token)
+}
+
+chart ScanError_InvalidIdentifierStart {
+    align Saturn 1value = 5;
+    ~~ ERROR (SCANNER): Invalid token '1value' (identifiers cannot start with a digit)
+}
+
+chart ScanError_InvalidNumberSuffix {
+    align Mercury speed = 4000.5f;
+    ~~ ERROR (SCANNER): Invalid numeric literal suffix 'f' (suffix not supported in Astro)
+}
+
+chart ScanError_UnterminatedString {
+    align Venus name = "AstroLang;
+    ~~ ERROR (SCANNER): Unterminated string literal (missing closing double quote before end-of-line/EOF)
+}
+
+chart ScanError_UnterminatedChar {
+    align Pluto letter = 'A;
+    ~~ ERROR (SCANNER): Unterminated character literal (missing closing single quote before end-of-line/EOF)
+}
+
+chart ScanError_InvalidFloat {
+    align Mercury pi = 3.14.159;
+    ~~ ERROR (SCANNER): Invalid floating-point literal (multiple decimal points)
+}
+
+chart ScanError_InvalidLogicalOp {
+    align Mars flag = true &&& false;
+    ~~ ERROR (SCANNER): Unrecognized token '&' in sequence '&&&' (only '&&' is valid)
+}
+
+chart ScanError_InvalidCommentStart {
+    ~ This is not a valid comment
+    ~~ ERROR (SCANNER): '~' alone does not start a comment (valid comment markers are '~~' or '~~~')
+}
+
+chart ScanError_UnterminatedMultilineComment {
+    ~~~ This comment block never closes...
+    align Saturn x = 10;
+    ~~ ERROR (SCANNER): Unterminated multi-line comment (missing closing '~~~' before EOF)
+}
+
+chart ScanError_InvalidBinaryDigit {
+    align Saturn bits = 0b102;
+    ~~ ERROR (SCANNER): Invalid binary literal (digit '2' not allowed in base-2)
+}

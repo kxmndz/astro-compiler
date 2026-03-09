@@ -20,8 +20,8 @@ public class SymbolTable {
 
         public final String    lexeme;     // the identifier name, e.g. "age"
         public final TokenType tokenType;  // always T_IDENTIFIER in phase 2
-        public String          dataType;   // e.g. "Saturn" — filled in later phases
-        public String          value;      // e.g. "25"     — filled in later phases
+        public String          dataType;   // e.g. "Saturn" - filled in later phases
+        public String          value;      // e.g. "25"     - filled in later phases
 
         public SymbolEntry(String lexeme, TokenType tokenType) {
             this.lexeme    = lexeme;

@@ -1,0 +1,201 @@
+chart ScannerErrorTest {
+
+    ~~ ============================================================
+    ~~ MASTER COMPLETE LEXICAL ERROR PROGRAM FOR PHASE II
+    ~~ This file is designed to exercise the major lexical error
+    ~~ categories handled by the current Astro scanner.
+    ~~ IMPORTANT:
+    ~~ 1. Some errors return T_ERROR tokens and increase "Errors found".
+    ~~ 2. Some errors are printed directly by the scanner but do NOT
+    ~~    increase the tester's T_ERROR count.
+    ~~ 3. The unterminated multi-line comment MUST remain last.
+    ~~ ============================================================
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 1: Illegal character '@'
+    ~~ The '@' symbol is not part of any valid Astro token.
+    ~~ ------------------------------------------------------------
+    align Saturn x = 5 @ 2;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 2: Illegal character '#'
+    ~~ The '#' symbol is also not part of any valid Astro token.
+    ~~ ------------------------------------------------------------
+    align Saturn hashTest = 9 # 3;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 3: Identifier starting with a digit
+    ~~ The scanner consumes '1value' as ONE invalid token.
+    ~~ ------------------------------------------------------------
+    align Saturn 1value = 5;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 4: Invalid numeric suffix
+    ~~ Suffix 'f' is not supported by the current Astro scanner.
+    ~~ ------------------------------------------------------------
+    align Mercury speed = 4000.5f;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 5: Trailing dot after integer
+    ~~ Actual scanner behavior:
+    ~~   - '12' is scanned as a valid number literal
+    ~~   - '.' is then scanned as an invalid token
+    ~~ ------------------------------------------------------------
+    align Mercury trailingDot = 12.;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 6: Extra dot after a valid decimal literal
+    ~~ Actual scanner behavior:
+    ~~   - '3.14' is scanned as a valid number literal
+    ~~   - '.' is scanned as an invalid token
+    ~~   - '159' is scanned as another valid number literal
+    ~~ ------------------------------------------------------------
+    align Mercury badFloat = 3.14.159;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 7: Immediate second dot in numeric sequence
+    ~~ This triggers the scanner's special multiple-dot check.
+    ~~ ------------------------------------------------------------
+    align Mercury doubleDot = 3..14;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 8: Invalid binary literal digit
+    ~~ Binary literals may only contain 0 and 1.
+    ~~ ------------------------------------------------------------
+    align Saturn bits = 0b102;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 9: Invalid octal literal
+    ~~ '8' is not allowed immediately after the 0o prefix.
+    ~~ Actual scanner behavior:
+    ~~   - scanner reports '0o' as invalid
+    ~~   - '89' may then be scanned separately
+    ~~ ------------------------------------------------------------
+    align Saturn octBad = 0o89;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 10: Invalid hexadecimal literal
+    ~~ No valid hex digit follows the 0x prefix.
+    ~~ Actual scanner behavior:
+    ~~   - scanner reports '0x' as invalid
+    ~~   - 'G1' may then be scanned separately as identifier text
+    ~~ ------------------------------------------------------------
+    align Saturn hexBad = 0xG1;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 11: Unterminated string literal
+    ~~ The closing double quote is missing before end of line.
+    ~~ ------------------------------------------------------------
+    align Venus badString = "AstroLang;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 12: Unknown escape sequence inside string literal
+    ~~ Important:
+    ~~   - the scanner PRINTS an error message
+    ~~   - but if the string closes properly, it may still return
+    ~~     a STRING_LITERAL token instead of T_ERROR
+    ~~ ------------------------------------------------------------
+    align Venus weirdEscape = "Hello\qWorld";
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 13: Empty character literal
+    ~~ A character literal must contain exactly one character.
+    ~~ ------------------------------------------------------------
+    align Neptune emptyChar = '';
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 14: Multi-character character literal
+    ~~ More than one character appears between the quotes.
+    ~~ ------------------------------------------------------------
+    align Neptune multiChar = 'XY';
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 15: Unterminated character literal
+    ~~ The closing single quote is missing before end of line.
+    ~~ ------------------------------------------------------------
+    align Neptune badChar = 'A;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 16: Unknown escape sequence inside character literal
+    ~~ Important:
+    ~~   - the scanner PRINTS an error message
+    ~~   - but if the literal closes properly, it may still return
+    ~~     a CHARACTER_LITERAL token instead of T_ERROR
+    ~~ ------------------------------------------------------------
+    align Neptune weirdChar = '\q';
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 17: Invalid logical operator '&&&'
+    ~~ Only '&&' is valid. Three ampersands are not recognized.
+    ~~ ------------------------------------------------------------
+    align Mars badLogicAnd = true &&& false;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 18: Invalid logical operator '|||'
+    ~~ Only '||' is valid. Three vertical bars are not recognized.
+    ~~ ------------------------------------------------------------
+    align Mars badLogicOr = true ||| false;
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 19: Single ampersand
+    ~~ Only '&&' is valid logical AND.
+    ~~ ------------------------------------------------------------
+    when (x & 1) {
+        radiate("bad and");
+    }
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 20: Single vertical bar
+    ~~ Only '||' is valid logical OR.
+    ~~ ------------------------------------------------------------
+    when (x | 1) {
+        radiate("bad or");
+    }
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 21: Single tilde — not a valid comment marker
+    ~~ A comment must begin with '~~' or '~~~'.
+    ~~ The rest of the line will be scanned as ordinary tokens.
+    ~~ ------------------------------------------------------------
+    ~ This line is not a valid comment
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 22: Lone dot outside a numeric literal
+    ~~ A dot by itself is not a valid token in the current scanner.
+    ~~ ------------------------------------------------------------
+    .
+
+
+    ~~ ------------------------------------------------------------
+    ~~ Error 23: Unterminated multi-line comment
+    ~~ This MUST be placed last.
+    ~~ Current scanner behavior:
+    ~~   - scanner prints the unterminated-comment error
+    ~~   - but does NOT return a T_ERROR token for it
+    ~~   - scanning then ends at EOF
+    ~~ ------------------------------------------------------------
+    ~~~ This comment block never closes...
+    align Saturn y = 10;
+}

@@ -4,10 +4,10 @@ package astro;
  * A single token produced by the Astro scanner.
  *
  * Holds:
- *   type   — what kind of token this is (from the TokenType enum)
- *   lexeme — the exact text from the source file
- *   line   — the line number where this token starts (1-based)
- *   column — the column number where this token starts (1-based)
+ *   type   - what kind of token this is (from the TokenType enum)
+ *   lexeme - the exact text from the source file
+ *   line   - the line number where this token starts (1-based)
+ *   column - the column number where this token starts (1-based)
  *
  * The toString() method prints the token in the format required by the spec:
  *   - Reserved words and operators  → [TOKEN_TYPE_NAME]   e.g. [T_WHEN]

@@ -1,8 +1,276 @@
+Program 1: Feature Demonstration
+chart FeatureShowcase {
+    ~~ ============================================
+    ~~ FEATURE DEMO: All Core Astro Language Features
+    ~~ ============================================
 
-    ~~ FEATURE: Special characters in identifiers
-    align Saturn $systemCounter = 0;
-    align Venus $config_path = "/etc/astro";
+    ~~~
+    Multi-line comment Demonstration
+    This whole block is commented and ignored
+    ~~~
+
+    ~~ FEATURE: refine keyword for constants
+    align refine Uranus PI = 3.14159265359;
+    align refine Saturn MAX_SPEED = 299792458;
+    align refine Venus LANGUAGE_NAME = "Astro";
+
+    ~~ FEATURE: Explicit declarations with align (static typing)
+    align Saturn age = 25;
+    align Mercury height = 5.9;
+    align Venus name = "Orion";
+    align Mars isActive = true;
+    align Neptune initial = 'A';
+    align Moon smallNum = 100;
+    align Uranus preciseValue = 3.14159265359;
+
+    ~~ FEATURE: Jupiter (Map/Object) type declaration
+    align Jupiter userData;
+
+    ~~ FEATURE: Implicit declaration with manifests (dynamic typing)
+    speed manifests 299792458;
+    greeting manifests "Hello Universe";
+
+     ~~ FEATURE: Non-decimal number formats
+    align Saturn binaryNum = 0b11111111;    ~~ 255 in binary
+    align Saturn octalNum = 0o377;          ~~ 255 in octal
+    align Saturn hexNum = 0xFF;             ~~ 255 in hexadecimal
+
+    ~~ FEATURE: Escape sequences in strings
+    align Venus multiline = "Line1\nLine2\nLine3";
+    align Venus tabbed = "Col1\tCol2\tCol3";
+    align Venus quoted = "She said \"Hello\"";
+    align Venus backslash = "Path: C:\\Program Files\\Astro";
+
+    ~~ FEATURE: Special characters in identifiers (must still begin with a letter)
+    align Saturn system$Counter = 0;
+    align Venus config_path$ = "/etc/astro";
     align Saturn user_age = 25;
     align Venus first_name = "Stellar";
-    align Saturn _privateVar = 42;
-    
+    align Saturn private_Var = 42;
+
+    ~~ FEATURE: Output with radiate (multiple arguments)
+    radiate("Welcome to Astro Language!\n");
+    radiate("Name: ", name, " Age: ", age, "\n");
+    radiate("Constants: PI=", PI, " Speed=", MAX_SPEED, "\n");
+
+    ~~ FEATURE: Input with summon
+    radiate("Enter your favorite planet: ");
+    align Venus planet;
+    summon(planet);
+    radiate("You entered: ", planet, "\n");
+
+    ~~ FEATURE: Arithmetic operators (+, -, *, /, %)
+    align Saturn sum = 10 + 5;
+    align Saturn diff = 20 - 8;
+    align Saturn product = 6 * 7;
+    align Saturn quotient = 100 / 4;
+    align Saturn remainder = 17 % 5;
+    radiate("Arithmetic: ", sum, ", ", diff, ", ", product, ", ", quotient, ", ", remainder, "\n");
+
+    ~~ FEATURE: Relational operators (==, !=, <, >, <=, >=)
+    align Mars equal = (10 == 10);
+    align Mars notEqual = (5 != 3);
+    align Mars less = (3 < 7);
+    align Mars greater = (9 > 2);
+    align Mars lessEq = (5 <= 5);
+    align Mars greaterEq = (8 >= 7);
+
+    ~~ FEATURE: Logical operators (&&, ||, !)
+      align Mars andResult = (true && false);
+    align Mars orResult = (true || false);
+    align Mars notResult = !false;
+    radiate("Logical AND: ", andResult, " OR: ", orResult, " NOT: ", notResult, "\n");
+
+    ~~ FEATURE: Unary negation
+    align Saturn negative = -42;
+    radiate("Negative value: ", negative, "\n");
+
+    ~~ FEATURE: Parenthesized expressions (nested)
+    align Saturn complex = ((10 + 5) * (20 - 8)) / 2;
+    radiate("Complex expression result: ", complex, "\n");
+
+    ~~ FEATURE: When/else conditional (if/then/else)
+    when (age >= 18) {
+        radiate("You are an adult\n");
+    }
+    else {
+        radiate("You are a minor\n");
+    }
+
+    ~~ FEATURE: Nested conditionals
+    align Saturn score = 85;
+    when (score >= 90) {
+        radiate("Grade: A\n");
+    }
+    else {
+        when (score >= 80) {
+            radiate("Grade: B\n");
+        }
+        else {
+            when (score >= 70) {
+                radiate("Grade: C\n");
+            }
+            else {
+                radiate("Grade: F\n");
+            }
+        }
+    }
+
+    ~~ FEATURE: Orbit loop (while loop)
+    align Saturn counter = 0;
+    radiate("Orbit loop:\n");
+    orbit (counter < 5) {
+        radiate("  Counter: ", counter, "\n");
+        counter = counter + 1;
+    }
+
+    ~~ FEATURE: Cycle loop (for loop)
+    radiate("Cycle loop:\n");
+    cycle (align Saturn i = 0; i < 3; i = i + 1) {
+        radiate("  Iteration: ", i, "\n");
+    }
+
+    ~~ FEATURE: Cast...retrograde loop (do-while)
+    align Saturn num = 0;
+    radiate("Cast-retrograde loop:\n");
+    cast {
+        radiate("  Number: ", num, "\n");
+        num = num + 1;
+    } retrograde (num < 3);
+
+    ~~ FEATURE: Nested loops (small multiplication table)
+    radiate("Nested loops (multiplication table):\n");
+    cycle (align Saturn row = 1; row <= 3; row = row + 1) {
+        cycle (align Saturn col = 1; col <= 3; col = col + 1) {
+            radiate(row, " x ", col, " = ", row * col, "\n");
+        }
+    }
+
+    ~~ FEATURE: Trace (switch-case) with path and voidPath
+    align Saturn choice = 2;
+    radiate("Trace statement:\n");
+    trace (choice) {
+        path 1:
+            radiate("  Choice is one\n");
+            collapse;
+
+        path 2:
+            radiate("  Choice is two\n");
+            collapse;
+
+        path 3:
+            radiate("  Choice is three\n");
+            collapse;
+
+        voidPath:
+            radiate("  Unknown choice\n");
+    }
+
+
+    ~~ FEATURE: Trace with string matching
+    align Venus color = "red";
+    trace (color) {
+        path "red":
+            radiate("Color: Red like Mars\n");
+            collapse;
+
+        path "blue":
+            radiate("Color: Blue like Neptune\n");
+            collapse;
+
+        voidPath:
+            radiate("Color: Unknown\n");
+    }
+
+    ~~ FEATURE: String comparison with < >
+    align Venus str1 = "Alpha";
+    align Venus str2 = "Beta";
+    align Mars strLess = (str1 < str2);
+    align Mars strGreater = (str1 > str2);
+    radiate("Alpha < Beta: ", strLess, "\n");
+    radiate("Alpha > Beta: ", strGreater, "\n");
+
+    ~~ FEATURE: Boolean literals (true, false)
+    align Mars flag1 = true;
+    align Mars flag2 = false;
+
+    ~~ FEATURE: Null literal (keep it consistent with Pluto)
+    align Pluto voidVar = null;
+    radiate("Pluto (void/null): ", voidVar, "\n");
+
+    ~~ FEATURE: Explicit type conversion with transmute
+    align Venus numString = "42";
+    align Saturn converted = transmute(numString, Saturn);
+    radiate("Converted string to int: ", converted, "\n");
+
+    align Saturn intVal = 100;
+    align Venus stringVal = transmute(intVal, Venus);
+    radiate("Converted int to string: ", stringVal, "\n");
+
+    ~~ FEATURE: Collapse (break) in loop
+    align Saturn breakTest = 0;
+    radiate("Testing collapse (break):\n");
+    orbit (breakTest < 10) {
+        when (breakTest == 5) {
+            radiate("  Breaking at ", breakTest, "\n");
+            collapse;
+        }
+        radiate("  Value: ", breakTest, "\n");
+        breakTest = breakTest + 1;
+    }
+
+    ~~ FEATURE: Skip (continue) in loop
+    radiate("Testing skip (continue):\n");
+    cycle (align Saturn j = 0; j < 5; j = j + 1) {
+        when (j == 2) {
+            skip;
+        }
+        radiate("  j = ", j, "\n");
+    }
+
+    ~~ FEATURE: Block scope
+    align Saturn outer = 100;
+    when (true) {
+        align Saturn inner = 50;
+        radiate("Inner scope: ", inner, " Outer: ", outer, "\n");
+    }
+    ~~ inner is not accessible here (block scoped)
+
+    ~~ FEATURE: Character type operations
+    align Neptune char1 = 'X';
+    align Neptune char2 = 'Y';
+    align Mars charEqual = (char1 == char2);
+    radiate("Char equality (X == Y): ", charEqual, "\n");
+
+    ~~ FEATURE: Complex expression with operator precedence
+    align Saturn result = 10 + 5 * 2 - 8 / 4;
+    radiate("Precedence test (10 + 5 * 2 - 8 / 4): ", result, "\n");
+
+    align Mars boolResult = (10 > 5 && 20 < 30 || !false);
+    radiate("Boolean precedence: ", boolResult, "\n");
+
+    ~~ FEATURE: Right-to-left assignment associativity
+ 
+    align Saturn a;
+    align Saturn b;
+    align Saturn c;
+    a = b = c = 10;
+    radiate("Chained assignment: a=", a, " b=", b, " c=", c, "\n");
+
+    ~~ FEATURE: Implicit string conversion in radiate only
+    align Saturn autoConvert = 777;
+    radiate("Auto-converted in output: ", autoConvert, "\n");
+
+    radiate("\n=== Data Types Summary ===\n");
+    radiate("Saturn (int): ", age, "\n");
+    radiate("Moon (byte): ", smallNum, "\n");
+    radiate("Mercury (float): ", height, "\n");
+    radiate("Uranus (double): ", preciseValue, "\n");
+    radiate("Mars (bool): ", isActive, "\n");
+    radiate("Venus (string): ", name, "\n");
+    radiate("Neptune (char): ", initial, "\n");
+    radiate("Pluto (void/null): ", voidVar, "\n");
+    radiate("Jupiter (map/object): declared\n");
+    radiate("\nProgram completed successfully!\n");
+}
+

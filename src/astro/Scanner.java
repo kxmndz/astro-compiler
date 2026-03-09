@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Astro Language Scanner — Phase 2
+ * Astro Language Scanner - Phase 2
  *
  * Reads source code one character at a time.
  * Returns one Token per call to nextToken().
  *
  * The tester calls nextToken() in a loop until T_EOF is returned.
- * Whitespace and comments are consumed silently — they are never returned.
+ * Whitespace and comments are consumed silently - they are never returned.
  * Errors are printed immediately and returned as T_ERROR tokens so the
  * tester can keep going and find more errors in the same file.
  */
@@ -72,7 +72,7 @@ public class Scanner {
         // Type conversion
         RESERVED.put("transmute", TokenType.T_TRANSMUTE);
 
-        // Special literals — these look like identifiers but are reserved
+        // Special literals - these look like identifiers but are reserved
         RESERVED.put("true", TokenType.T_BOOLEAN_LITERAL);
         RESERVED.put("false", TokenType.T_BOOLEAN_LITERAL);
         RESERVED.put("null", TokenType.T_NULL_LITERAL);
@@ -83,14 +83,14 @@ public class Scanner {
     // =========================================================================
     //
     // The scanner holds the entire source as a String.
-    // pos — index of the next character to read
-    // line — current line number (1-based, for error messages)
-    // col — current column number (1-based, for error messages)
+    // pos - index of the next character to read
+    // line - current line number (1-based, for error messages)
+    // col - current column number (1-based, for error messages)
     //
-    // tokLine / tokCol — saved at the START of each token so the Token object
+    // tokLine / tokCol - saved at the START of each token so the Token object
     // records where the token began, not where it ended.
     //
-    // errorMessages — store error messages for a summary at the end
+    // errorMessages - store error messages for a summary at the end
 
     private final String source;
     private int pos = 0;
@@ -111,7 +111,7 @@ public class Scanner {
     }
 
     // =========================================================================
-    // SECTION 3: nextToken() — the main public entry point
+    // SECTION 3: nextToken() - the main public entry point
     // =========================================================================
     //
     // The tester calls this once per token.
@@ -188,12 +188,12 @@ public class Scanner {
                     consumeSingleLineComment();
                     continue;
                 }
-                // A single '~' is a lexical error — stop skipping,
+                // A single '~' is a lexical error - stop skipping,
                 // let the operator scanner handle and report it.
                 break;
             }
 
-            // ── Not whitespace or comment — stop ─────────────────────────────
+            // ── Not whitespace or comment - stop ─────────────────────────────
             break;
         }
     }
@@ -228,7 +228,7 @@ public class Scanner {
 
         // Reached EOF without finding closing ~~~
         printError(startLine, startCol,
-                "Unterminated multi-line comment — missing closing '~~~'");
+                "Unterminated multi-line comment - missing closing '~~~'");
     }
 
     // =========================================================================
@@ -247,14 +247,14 @@ public class Scanner {
         while (pos < source.length()) {
             char c = peek();
 
-            // Newline before closing quote — unterminated string
+            // Newline before closing quote - unterminated string
             if (c == '\n') {
                 printError(tokLine, tokCol,
-                        "Unterminated string literal — missing closing '\"' before end of line");
+                        "Unterminated string literal - missing closing '\"' before end of line");
                 return makeToken(TokenType.T_ERROR, sb.toString());
             }
 
-            // Closing quote — string is complete
+            // Closing quote - string is complete
             if (c == '"') {
                 sb.append(advance()); // consume the closing "
                 return makeToken(TokenType.T_STRING_LITERAL, sb.toString());
@@ -292,7 +292,7 @@ public class Scanner {
 
         // EOF before closing quote
         printError(tokLine, tokCol,
-                "Unterminated string literal — reached end of file");
+                "Unterminated string literal - reached end of file");
         return makeToken(TokenType.T_ERROR, sb.toString());
     }
 
@@ -308,7 +308,7 @@ public class Scanner {
         StringBuilder sb = new StringBuilder();
         sb.append(advance()); // consume the opening '
 
-        // EOF or newline immediately — unterminated
+        // EOF or newline immediately - unterminated
         if (pos >= source.length() || peek() == '\n') {
             printError(tokLine, tokCol,
                     "Unterminated character literal");
@@ -319,7 +319,7 @@ public class Scanner {
         if (peek() == '\'') {
             sb.append(advance()); // consume closing '
             printError(tokLine, tokCol,
-                    "Empty character literal — must contain exactly one character");
+                    "Empty character literal - must contain exactly one character");
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
@@ -357,14 +357,14 @@ public class Scanner {
             return makeToken(TokenType.T_CHARACTER_LITERAL, sb.toString());
         }
 
-        // Missing closing quote — consume until we find ' or newline
+        // Missing closing quote - consume until we find ' or newline
         while (pos < source.length() && peek() != '\'' && peek() != '\n') {
             sb.append(advance());
         }
         if (pos < source.length() && peek() == '\'') {
             sb.append(advance());
             printError(tokLine, tokCol,
-                    "Invalid character literal — more than one character: " + sb);
+                    "Invalid character literal - more than one character: " + sb);
         } else {
             printError(tokLine, tokCol,
                     "Unterminated character literal: " + sb);
@@ -415,7 +415,7 @@ public class Scanner {
 
                 // Check for multiple decimal points
                 // e.g. 3.14.159
-                if (peek() == '.'
+                if (pos < source.length() && peek() == '.'
                         && pos + 1 < source.length()
                         && Character.isDigit(source.charAt(pos + 1))) {
                     // consume the rest of the bad number for the error message
@@ -425,7 +425,7 @@ public class Scanner {
                     }
                     printError(
                             tokLine, tokCol,
-                            "Invalid floating-point literal — multiple decimal points: " + sb);
+                            "Invalid floating-point literal - multiple decimal points: " + sb);
                     return makeToken(TokenType.T_ERROR, sb.toString());
                 }
 
@@ -433,7 +433,7 @@ public class Scanner {
                 if (pos < source.length() && Character.isLetter(peek())) {
                     sb.append(advance()); // consume the bad character
                     printError(tokLine, tokCol,
-                            "Invalid numeric literal — unsupported suffix: " + sb);
+                            "Invalid numeric literal - unsupported suffix: " + sb);
                     return makeToken(TokenType.T_ERROR, sb.toString());
                 }
 
@@ -450,7 +450,7 @@ public class Scanner {
                 sb.append(advance());
             }
             printError(tokLine, tokCol,
-                    "Invalid token — identifiers cannot start with a digit: " + sb);
+                    "Invalid token - identifiers cannot start with a digit: " + sb);
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
@@ -463,7 +463,7 @@ public class Scanner {
 
         if (pos >= source.length() || (peek() != '0' && peek() != '1')) {
             printError(tokLine, tokCol,
-                    "Invalid binary literal — no binary digits after '0b'");
+                    "Invalid binary literal - no binary digits after '0b'");
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
@@ -472,7 +472,8 @@ public class Scanner {
         }
 
         // Check for decimal point(s)
-        if (peek() == '.'
+        if (pos < source.length()
+                && peek() == '.'
                 && (pos + 1 < source.length())
                 && (source.charAt(pos + 1) == '0' || source.charAt(pos + 1) == '1')) {
             // consume the rest of the bad number for the error message
@@ -482,7 +483,7 @@ public class Scanner {
             }
             printError(
                     tokLine, tokCol,
-                    "Invalid binary literal — decimal point not allowed: " + sb);
+                    "Invalid binary literal - decimal point not allowed: " + sb);
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
@@ -490,7 +491,7 @@ public class Scanner {
         if (pos < source.length() && Character.isDigit(peek())) {
             sb.append(advance());
             printError(tokLine, tokCol,
-                    "Invalid binary literal — digit not allowed in base-2: " + sb);
+                    "Invalid binary literal - digit not allowed in base-2: " + sb);
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
@@ -503,7 +504,7 @@ public class Scanner {
 
         if (pos >= source.length() || peek() < '0' || peek() > '7') {
             printError(tokLine, tokCol,
-                    "Invalid octal literal — no octal digits after '0o'");
+                    "Invalid octal literal - no octal digits after '0o'");
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
@@ -512,7 +513,8 @@ public class Scanner {
         }
 
         // Check for decimal point(s)
-        if (peek() == '.'
+        if (pos < source.length()
+                && peek() == '.'
                 && (pos + 1 < source.length())
                 && (source.charAt(pos + 1) >= '0' && source.charAt(pos + 1) <= '7')) {
             // consume the rest of the bad number for the error message
@@ -522,7 +524,7 @@ public class Scanner {
             }
             printError(
                     tokLine, tokCol,
-                    "Invalid octal literal — decimal point not allowed: " + sb);
+                    "Invalid octal literal - decimal point not allowed: " + sb);
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
@@ -530,7 +532,7 @@ public class Scanner {
         if (pos < source.length() && Character.isDigit(peek())) {
             sb.append(advance());
             printError(tokLine, tokCol,
-                    "Invalid octal literal — digit not allowed in base-8: " + sb);
+                    "Invalid octal literal - digit not allowed in base-8: " + sb);
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
@@ -543,12 +545,12 @@ public class Scanner {
 
         if (pos >= source.length() || !isHexDigit(peek())) {
             printError(tokLine, tokCol,
-                    "Invalid hex literal — no hex digits after '0x'");
+                    "Invalid hex literal - no hex digits after '0x'");
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
         // Check for decimal point(s)
-        if (peek() == '.'
+        if (pos < source.length() && peek() == '.'
                 && (pos + 1 < source.length())
                 && isHexDigit(source.charAt(pos + 1))) {
             // consume the rest of the bad number for the error message
@@ -558,7 +560,7 @@ public class Scanner {
             }
             printError(
                     tokLine, tokCol,
-                    "Invalid hex literal — decimal point not allowed: " + sb);
+                    "Invalid hex literal - decimal point not allowed: " + sb);
             return makeToken(TokenType.T_ERROR, sb.toString());
         }
 
@@ -592,7 +594,7 @@ public class Scanner {
 
         String lexeme = sb.toString();
 
-        // Table lookup — reserved word or identifier?
+        // Table lookup - reserved word or identifier?
         TokenType type = RESERVED.getOrDefault(lexeme, TokenType.T_IDENTIFIER);
 
         return makeToken(type, lexeme);
@@ -691,7 +693,7 @@ public class Scanner {
                     return makeToken(TokenType.T_LOGICAL_AND, "&&");
                 }
                 printError(tokLine, tokCol,
-                        "Invalid token '&' — did you mean '&&'?");
+                        "Invalid token '&' - did you mean '&&'?");
                 return makeToken(TokenType.T_ERROR, "&");
             }
 
@@ -702,21 +704,21 @@ public class Scanner {
                     return makeToken(TokenType.T_LOGICAL_OR, "||");
                 }
                 printError(tokLine, tokCol,
-                        "Invalid token '|' — did you mean '||'?");
+                        "Invalid token '|' - did you mean '||'?");
                 return makeToken(TokenType.T_ERROR, "|");
             }
 
             // ── Single '~' not consumed by comment skipper ────────────────────
             case '~': {
                 printError(tokLine, tokCol,
-                        "Invalid token '~' — did you mean '~~' or '~~~'?");
+                        "Invalid token '~' - did you mean '~~' or '~~~'?");
                 return makeToken(TokenType.T_ERROR, "~");
             }
 
             // ── Dot appearing outside a numeric literal ───────────────────────
             case '.': {
                 printError(tokLine, tokCol,
-                        "Unexpected '.' — '.' is only valid inside numeric literals");
+                        "Unexpected '.' - '.' is only valid inside numeric literals");
                 return makeToken(TokenType.T_ERROR, ".");
             }
 
@@ -822,8 +824,8 @@ public class Scanner {
             return "(Could not get error preview)";
         }
         String lineText = lines[errorLine - 1];
-        
-        return lineText + '\n' + " ".repeat(errorCol+3) + "^\n";
+
+        return lineText + '\n' + " ".repeat(errorCol + 3) + "^\n";
 
     }
 

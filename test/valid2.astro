@@ -1,0 +1,280 @@
+chart ScannerTest {
+
+    ~~~
+    Covered areas:
+    - program structure
+    - whitespace and both comment forms
+    - all datatype keywords
+    - explicit, implicit, constant, and array declarations
+    - identifiers, including underscore and dollar-sign forms
+    - decimal, negative, binary, octal, and hexadecimal number literals
+    - string literals and supported escape sequences
+    - character literals and supported escape sequences
+    - arithmetic, relational, equality, logical, and assignment operators
+    - long operator chains
+    - input/output
+    - transmute
+    - when / else
+    - trace / path / voidPath / collapse
+    - orbit / cycle / cast / retrograde / skip
+    - array indexing
+    - chained assignment
+    ~~~
+
+    ~~ ============================================================
+    ~~ 1. Constant declarations using refine
+    ~~ ============================================================
+    align refine Uranus PI = 3.14159265359;
+    align refine Saturn MAX_SPEED = 299792458;
+    align refine Venus LANGUAGE = "Astro";
+
+    ~~ ============================================================
+    ~~ 2. All datatype keywords
+    ~~ ============================================================
+    align Saturn wholeNum = 25;
+    align Moon smallNum = 100;
+    align Mercury decimalNum = 5.9;
+    align Uranus preciseNum = 3.14159265359;
+    align Mars isReady = true;
+    align Venus title = "Orion";
+    align Neptune initial = 'A';
+    align Pluto nothing = null;
+    align Jupiter storage;
+
+    ~~ ============================================================
+    ~~ 3. Valid number literal families
+    ~~ ============================================================
+    align Saturn binaryNum = 0b11111111;
+    align Saturn octalNum = 0o377;
+    align Saturn hexNum = 0xFF;
+
+    ~~ Negative decimal literals
+    align Saturn negInt = -42;
+    align Mercury negFloat = -3.14;
+
+    ~~ ============================================================
+    ~~ 4. Valid string literals with supported escape sequences
+    ~~ ============================================================
+    align Venus tabbed = "Col1\tCol2";
+    align Venus multiLineText = "Line1\nLine2";
+    align Venus quoted = "She said \"Hello\"";
+    align Venus backslash = "C:\\Users\\Astro";
+    align Venus mixedText = "Quote: \"A\"  Slash: \\  Tab: \t";
+
+    ~~ ============================================================
+    ~~ 5. Valid character literals
+    ~~ ============================================================
+    align Neptune charA = 'A';
+    align Neptune charNewline = '\n';
+    align Neptune charTab = '\t';
+    align Neptune charSlash = '\\';
+    align Neptune charQuote = '\'';
+    align Neptune charDoubleQuote = '"';
+
+    ~~ ============================================================
+    ~~ 6. Identifier patterns
+    ~~ ============================================================
+    align Saturn system$Counter = 0;
+    align Venus config_path$ = "/etc/astro";
+    align Saturn alpha1 = 1;
+    align Saturn beta_2 = 2;
+    align Saturn gamma$3 = 3;
+
+    ~~ ============================================================
+    ~~ 7. Implicit declarations using manifests
+    ~~ ============================================================
+    speed manifests 299792458;
+    greeting manifests "Hello Universe";
+    launchReady manifests true;
+
+    ~~ ============================================================
+    ~~ 8. Arithmetic operators (basic forms)
+    ~~ ============================================================
+    align Saturn sumResult = 10 + 5;
+    align Saturn diffResult = 20 - 8;
+    align Saturn prodResult = 6 * 7;
+    align Saturn divResult = 100 / 4;
+    align Saturn modResult = 17 % 5;
+
+    ~~ ============================================================
+    ~~ 9. Long arithmetic operator chains
+    ~~ ============================================================
+    align Saturn chainMul = 5 * 3 * 2;
+    align Saturn chainDiv = 100 / 5 / 2;
+    align Saturn chainAddSub = 10 + 20 - 5 + 3;
+    align Saturn chainMod = 50 % 7 % 3;
+    align Mercury chainMixed1 = 3.14 * 2.0 + 1.5;
+    align Mercury chainMixed2 = -5.5 + 2.25 - 1.0;
+
+    ~~ Parenthesized arithmetic
+    align Saturn result1 = (5 + 3) * (2 + 4);
+    align Saturn result2 = ((10 - 2) * 3) / 4;
+    align Saturn result3 = (1 + (2 * (3 + 4)));
+
+    ~~ ============================================================
+    ~~ 10. Relational and equality operators
+    ~~ ============================================================
+    align Mars eq = (10 == 10);
+    align Mars neq = (5 != 3);
+    align Mars lt = (3 < 7);
+    align Mars gt = (9 > 2);
+    align Mars lteq = (5 <= 5);
+    align Mars gteq = (8 >= 7);
+
+    ~~ ============================================================
+    ~~ 11. Logical operators
+    ~~ ============================================================
+    align Mars andResult = (true && false);
+    align Mars orResult = (true || false);
+    align Mars notResult = !false;
+
+    ~~ Long logical chains
+    align Mars andChain = (true && false && true);
+    align Mars orChain = (false || true || false);
+    align Mars mixedLogic = !(true && false) || (10 == 10);
+
+    ~~ ============================================================
+    ~~ 12. Assignment forms
+    ~~ ============================================================
+    align Saturn a;
+    align Saturn b;
+    align Saturn c;
+    a = b = c = 10;
+
+    alpha1 = alpha1 + 1;
+    beta_2 = beta_2 * 2;
+    gamma$3 = gamma$3 - 1;
+
+    ~~ ============================================================
+    ~~ 13. Explicit conversion
+    ~~ ============================================================
+    align Saturn converted = transmute("42", Saturn);
+
+    ~~ ============================================================
+    ~~ 14. Input and output
+    ~~ ============================================================
+    radiate("Enter your favorite planet: ");
+    align Venus planet;
+    summon(planet);
+    radiate("You entered: ", planet, "\n");
+
+    ~~ ============================================================
+    ~~ 15. when / else
+    ~~ ============================================================
+    when (wholeNum >= 18) {
+        radiate("Adult\n");
+    }
+    else {
+        radiate("Minor\n");
+    }
+
+    ~~ when with denser expression
+    when ((10 + 2 < 5 * 3) && (eq == true)) {
+        radiate("complex when true");
+    }
+    else {
+        radiate("complex when false");
+    }
+
+    ~~ ============================================================
+    ~~ 16. trace / path / voidPath / collapse
+    ~~ ============================================================
+    align Saturn choice = 2;
+    trace (choice) {
+        path 1:
+            radiate("One\n");
+            collapse;
+        path 2:
+            radiate("Two\n");
+            collapse;
+        voidPath:
+            radiate("Unknown\n");
+    }
+
+    ~~ ============================================================
+    ~~ 17. orbit loop
+    ~~ ============================================================
+    align Saturn ctr = 0;
+    orbit (ctr < 5) {
+        radiate(ctr);
+        ctr = ctr + 1;
+    }
+
+    ~~ ============================================================
+    ~~ 18. cycle loop
+    ~~ ============================================================
+    cycle (align Saturn i = 0; i < 3; i = i + 1) {
+        radiate(i);
+    }
+
+    ~~ cycle with nested when and skip
+    cycle (align Saturn j = 0; j < 5; j = j + 1) {
+        when (j == 2) { skip; }
+        when (j == 4) { collapse; }
+        radiate(j);
+    }
+
+    ~~ ============================================================
+    ~~ 19. cast / retrograde
+    ~~ ============================================================
+    align Saturn n = 0;
+    cast {
+        radiate(n);
+        n = n + 1;
+    } retrograde (n < 3);
+
+    ~~ ============================================================
+    ~~ 20. Array marker, brackets, separators, indexing
+    ~~ ============================================================
+    align constellation Saturn nums = [10, 20, 30, 40];
+    align constellation Venus labels = ["Mercury", "Venus", "Earth"];
+    radiate(nums[0], nums[1], nums[2], nums[3]);
+    radiate(labels[0], labels[1], labels[2]);
+
+    ~~ ============================================================
+    ~~ 21. Nested valid lexical stress
+    ~~ ============================================================
+    align Saturn seed = 0x1F;
+    align Saturn mask = 0b10101010;
+    align Saturn oct = 0o715;
+    align Venus deepTitle = "Deep Scan";
+    align Mars ready = true;
+
+    cycle (align Saturn outer = 0; outer < 2; outer = outer + 1) {
+        orbit (seed > 0 && ready == true) {
+            trace (outer) {
+                path 0:
+                    radiate("outer zero");
+                    collapse;
+                path 1:
+                    radiate("outer one");
+                    collapse;
+                voidPath:
+                    radiate("fallback");
+            }
+
+            cast {
+                seed = seed - 1;
+                when (seed == 0) { skip; }
+                radiate(seed, deepTitle, "\n");
+            } retrograde (seed > 0);
+        }
+    }
+
+    ~~ ============================================================
+    ~~ 22. Final output to ensure repeated separators and identifiers
+    ~~ ============================================================
+    radiate(
+        wholeNum, smallNum, decimalNum, preciseNum,
+        isReady, title, initial, nothing,
+        binaryNum, octalNum, hexNum,
+        system$Counter, config_path$,
+        sumResult, diffResult, prodResult, divResult, modResult,
+        chainMul, chainDiv, chainAddSub, chainMod,
+        eq, neq, lt, gt, lteq, gteq,
+        andResult, orResult, notResult,
+        a, b, c,
+        converted,
+        nums[0], nums[1], nums[2], nums[3]
+    );
+}
