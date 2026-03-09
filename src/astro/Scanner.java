@@ -1,5 +1,8 @@
 package astro;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -101,13 +104,21 @@ public class Scanner {
     private int tokCol; // column where current token started
 
     private List<String> errorMessages = new ArrayList<>();
+    private SymbolTable symbolTable = new SymbolTable();
 
     // =========================================================================
     // Constructor
     // =========================================================================
 
-    public Scanner(String source) {
-        this.source = source;
+    public Scanner(String filePath) {
+        String tmp = "";
+        try {
+            tmp = new String(Files.readAllBytes(Paths.get(filePath)));
+        } catch (IOException e) {
+            System.out.println("[ERROR] Could not read file: " + filePath);
+            System.out.println("        " + e.getMessage());
+        }
+        this.source = tmp;
     }
 
     // =========================================================================
@@ -597,6 +608,9 @@ public class Scanner {
         // Table lookup - reserved word or identifier?
         TokenType type = RESERVED.getOrDefault(lexeme, TokenType.T_IDENTIFIER);
 
+        // SymbolTable#put already checks if the identifier is new before adding
+        symbolTable.put(lexeme, type);
+        
         return makeToken(type, lexeme);
     }
 
@@ -834,5 +848,9 @@ public class Scanner {
      */
     public List<String> getErrorSummary() {
         return errorMessages;
+    }
+
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
     }
 }

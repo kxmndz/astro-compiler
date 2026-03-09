@@ -1,8 +1,5 @@
 package astro;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -43,19 +40,9 @@ public class Main {
 
         // ── Step 2: Read the source file ──────────────────────────────────────
         String filePath = args[0];
-        String source;
 
-        try {
-            source = new String(Files.readAllBytes(Paths.get(filePath)));
-        } catch (IOException e) {
-            System.out.println("[ERROR] Could not read file: " + filePath);
-            System.out.println("        " + e.getMessage());
-            return;
-        }
-
-        // ── Step 3: Create the scanner and symbol table ───────────────────────
-        Scanner scanner = new Scanner(source);
-        SymbolTable symbolTable = new SymbolTable();
+        // ── Step 3: Create the scanner ───────────────────────
+        Scanner scanner = new Scanner(filePath);
 
         // ── Step 4: Print the header ──────────────────────────────────────────
         printHeader(filePath);
@@ -98,11 +85,8 @@ public class Main {
 
             // ── T_IDENTIFIER: add to symbol table if new ─────────────────────
             if (token.type == TokenType.T_IDENTIFIER) {
-                boolean isNew = !symbolTable.contains(token.lexeme);
-                symbolTable.put(token.lexeme, token.type);
-
                 // Print the token - mark new identifiers with (new) for clarity
-                System.out.printf("%s%-28s%s %s%-20s%s line %-5d col %-5d %s%n",
+                System.out.printf("%s%-28s%s %s%-20s%s line %-5d col %-5d %n",
                         ANSI_BLUE,
                         token.type.name(),
                         ANSI_RESET,
@@ -110,8 +94,7 @@ public class Main {
                         token.lexeme,
                         ANSI_RESET,
                         token.line,
-                        token.column,
-                        isNew ? "(added to symbol table)" : "(already in symbol table)");
+                        token.column);
                 goodTokenCount++;
                 continue;
             }
@@ -137,7 +120,7 @@ public class Main {
         }
 
         // ── Step 7: Print the symbol table ───────────────────────────────────
-        symbolTable.print();
+        scanner.getSymbolTable().print();
     }
 
     // ── Helper: print the output header ──────────────────────────────────────
